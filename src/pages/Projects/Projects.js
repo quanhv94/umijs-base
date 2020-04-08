@@ -12,8 +12,8 @@ const Products = ({ dispatch, projects, loading }) => {
       type: 'projects/delete',
       projectId,
     });
-  }
-  if (loading) return <Spin />
+  };
+  if (loading) return <Spin />;
   return (
     <div>
       <h2>List of Project</h2>

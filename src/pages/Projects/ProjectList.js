@@ -18,13 +18,7 @@ const ProjectList = ({ onDelete, projects }) => {
       },
     },
   ];
-  return (
-    <Table
-      rowKey="id"
-      dataSource={projects}
-      columns={columns}
-    />
-  );
+  return <Table rowKey="id" dataSource={projects} columns={columns} />;
 };
 
 export default ProjectList;

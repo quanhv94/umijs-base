@@ -11,7 +11,7 @@ export default defineConfig({
       component: '@/wrappers/PageWrapper/PageWrapper',
       routes: [
         { path: '/index', exact: true, component: '@/pages/Index/Index' },
-        { path: '/projects', exact: true, component: '@/pages/Projects/Projects' }
+        { path: '/projects', exact: true, component: '@/pages/Projects/Projects' },
       ],
     },
   ],
