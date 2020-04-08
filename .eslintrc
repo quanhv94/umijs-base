@@ -22,7 +22,7 @@
     "no-use-before-define": "off",
     "react/jsx-filename-extension": "off",
     "react/prop-types": "off",
-    "comma-dangle": "off"
+    "comma-dangle": 2
   },
   "globals": {
     "fetch": false,
