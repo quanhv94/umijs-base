@@ -7,7 +7,7 @@ export default {
   state: {},
   reducers: {},
   effects: {
-    *login(action, { call }) {
+    *login(action: any, { call }: any) {
       try {
         const { username, password } = action.payload;
         // TODO: call real api
@@ -25,7 +25,7 @@ export default {
         console.log(e);
       }
     },
-    logout(action) {
+    logout(action: any) {
       Cookies.remove('token');
       action.history.push('/login');
     },

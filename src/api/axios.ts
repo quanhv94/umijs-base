@@ -7,15 +7,15 @@ const axiosInstance = Axios.create({
   baseURL: configs.API_DOMAIN,
 });
 axiosInstance.interceptors.request.use(
-  (config) => {
+  config => {
     // eslint-disable-next-line no-param-reassign
     config.headers.Authorization = `Bearer ${Cookies.get('token')}`;
     return config;
   },
-  (error) => Promise.reject(error),
+  error => Promise.reject(error),
 );
 axiosInstance.interceptors.response.use(
-  (response) => {
+  response => {
     // invalid token
     // if (typeof (response.data) !== 'object') {
     //   Cookies.remove('token');
@@ -23,12 +23,16 @@ axiosInstance.interceptors.response.use(
     // }
     return response;
   },
-  (error) => Promise.reject(error),
+  error => Promise.reject(error),
 );
 
-export const sendGet = (url, params) => axiosInstance.get(url, { params });
-export const sendPost = (url, params, queryParams) =>
+export const sendGet = (url: string, params: any) =>
+  axiosInstance.get(url, { params });
+export const sendPost = (url: string, params: any, queryParams: any) =>
   axiosInstance.post(url, params, { params: queryParams });
-export const sendPut = (url, params) => axiosInstance.put(url, params);
-export const sendPatch = (url, params) => axiosInstance.patch(url, params);
-export const sendDelete = (url, params) => axiosInstance.delete(url, { params });
+export const sendPut = (url: string, params: any) =>
+  axiosInstance.put(url, params);
+export const sendPatch = (url: string, params: any) =>
+  axiosInstance.patch(url, params);
+export const sendDelete = (url: string, params: any) =>
+  axiosInstance.delete(url, { params });

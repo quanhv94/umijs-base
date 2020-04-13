@@ -1,10 +1,14 @@
 import React from 'react';
 import { Input, Button, Form, Row } from 'antd';
 
-export default function({ onSubmit }) {
+interface IProps {
+  onSubmit: (values: any) => void;
+}
+
+export default function({ onSubmit }: IProps) {
   return (
     <Form onFinish={onSubmit}>
-      <Row justify="center" align="center">
+      <Row justify="center">
         <h2>LOGIN</h2>
       </Row>
       <Form.Item

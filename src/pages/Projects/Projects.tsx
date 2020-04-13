@@ -1,13 +1,19 @@
 import React from 'react';
-import { connect } from 'umi';
+import { connect, Dispatch } from 'umi';
 import { Spin } from 'antd';
 import ProductList from './ProjectList';
 
-const Products = ({ dispatch, projects, loading }) => {
+interface IProps {
+  dispatch: Dispatch;
+  projects: Array<any>;
+  loading: Boolean;
+}
+
+const Products = ({ dispatch, projects, loading }: IProps) => {
   React.useEffect(() => {
     dispatch({ type: 'projects/loadAll' });
   }, []);
-  const handleDelete = (projectId) => {
+  const handleDelete = (projectId: Number) => {
     dispatch({
       type: 'projects/delete',
       projectId,
@@ -22,7 +28,11 @@ const Products = ({ dispatch, projects, loading }) => {
   );
 };
 
-export default connect(({ projects }) => ({
+interface IState {
+  projects: any;
+}
+
+export default connect(({ projects }: IState) => ({
   projects: projects.items,
   loading: projects.loading,
 }))(Products);

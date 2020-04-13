@@ -1,6 +1,9 @@
 import { defineConfig } from 'umi';
 
 export default defineConfig({
+  nodeModulesTransform: {
+    type: 'none',
+  },
   hash: true,
   routes: [
     { path: '/login', exact: true, component: '@/pages/Login/Login' },
@@ -11,7 +14,11 @@ export default defineConfig({
       component: '@/wrappers/PageWrapper/PageWrapper',
       routes: [
         { path: '/index', exact: true, component: '@/pages/Index/Index' },
-        { path: '/projects', exact: true, component: '@/pages/Projects/Projects' },
+        {
+          path: '/projects',
+          exact: true,
+          component: '@/pages/Projects/Projects',
+        },
       ],
     },
   ],

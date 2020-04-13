@@ -1,3 +1,8 @@
+interface IState {
+  loading: Boolean;
+  items: Array<any>;
+}
+
 export default {
   namespace: 'projects',
   state: {
@@ -5,10 +10,13 @@ export default {
     items: [],
   },
   reducers: {
-    setLoading: (state, { status }) => ({ ...state, loading: status }),
-    loadSuccess: (state, { items }) => ({ ...state, items }),
-    deleteSuccess: (state, { projectId }) => {
-      const items = state.items.filter((item) => item.id !== projectId);
+    setLoading: (state: IState, { status }: any) => ({
+      ...state,
+      loading: status,
+    }),
+    loadSuccess: (state: IState, { items }: any) => ({ ...state, items }),
+    deleteSuccess: (state: IState, { projectId }: any) => {
+      const items = state.items.filter(item => item.id !== projectId);
       return {
         ...state,
         items,
@@ -16,12 +24,12 @@ export default {
     },
   },
   effects: {
-    *loadAll(action, { call, put }) {
+    *loadAll(action: any, { call, put }: any) {
       yield put({ type: 'setLoading', status: true });
       // TODO: call real api
       yield call(
         () =>
-          new Promise((resolve) =>
+          new Promise(resolve =>
             setTimeout(() => {
               resolve(true);
             }, 2000),
@@ -35,7 +43,7 @@ export default {
       yield put({ type: 'loadSuccess', items });
       yield put({ type: 'setLoading', status: false });
     },
-    *delete(action, { put }) {
+    *delete(action: any, { put }: any) {
       const { projectId } = action;
       yield put({ type: 'deleteSuccess', projectId });
     },

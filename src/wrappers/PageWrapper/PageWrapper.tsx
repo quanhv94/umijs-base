@@ -1,18 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { ReactNode } from 'react';
 import Cookies from 'js-cookie';
-import { Redirect, connect } from 'umi';
+import { Redirect } from 'umi';
 import PageHeader from '@/components/PageHeader/PageHeader';
 import SideNav from '@/components/SideNav/SideNav';
 import styles from './styles.less';
 
-function PageWrapper({ children, dispatch }) {
+interface IProps {
+  children: ReactNode;
+}
+
+function PageWrapper({ children }: IProps) {
   const isAuthenticated = !!Cookies.get('token');
   if (!isAuthenticated) return <Redirect to="/login" />;
-  useEffect(() => {
-    if (isAuthenticated) {
-      dispatch({ type: 'masterData/loadMasterData' });
-    }
-  }, [dispatch]);
   return (
     <div className={styles.pageWrapper}>
       <PageHeader />
@@ -24,4 +23,4 @@ function PageWrapper({ children, dispatch }) {
   );
 }
 
-export default connect()(PageWrapper);
+export default PageWrapper;

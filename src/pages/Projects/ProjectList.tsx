@@ -1,7 +1,12 @@
 import React from 'react';
 import { Table, Popconfirm, Button } from 'antd';
 
-const ProjectList = ({ onDelete, projects }) => {
+interface IProps {
+  onDelete: Function;
+  projects: Array<any>;
+}
+
+const ProjectList = ({ onDelete, projects }: IProps) => {
   const columns = [
     {
       title: 'Name',
@@ -9,7 +14,7 @@ const ProjectList = ({ onDelete, projects }) => {
     },
     {
       title: 'Actions',
-      render: (text, record) => {
+      render: (text: any, record: any) => {
         return (
           <Popconfirm title="Delete?" onConfirm={() => onDelete(record.id)}>
             <Button>Delete</Button>
