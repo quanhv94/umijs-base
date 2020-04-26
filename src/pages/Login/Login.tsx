@@ -1,16 +1,14 @@
 import React, { useEffect } from 'react';
-import { connect, Dispatch, History } from 'umi';
+import { useHistory, useDispatch } from 'umi';
 import Cookies from 'js-cookie';
 import { Card } from 'antd';
 import LoginForm from './Form';
 import styles from './style.less';
 
-interface IProps {
-  history: History;
-  dispatch: Dispatch;
-}
+export default function Login() {
+  const history = useHistory();
+  const dispatch = useDispatch();
 
-function Login({ history, dispatch }: IProps) {
   useEffect(() => {
     if (Cookies.get('token')) {
       history.push('/');
@@ -29,4 +27,3 @@ function Login({ history, dispatch }: IProps) {
     </div>
   );
 }
-export default connect()(Login);

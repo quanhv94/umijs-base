@@ -1,15 +1,12 @@
 import React from 'react';
-import { connect, Dispatch } from 'umi';
 import { Spin } from 'antd';
 import ProductList from './ProjectList';
+import { useSelector, useDispatch } from 'umi';
 
-interface IProps {
-  dispatch: Dispatch;
-  projects: Array<any>;
-  loading: Boolean;
-}
-
-const Products = ({ dispatch, projects, loading }: IProps) => {
+export default function Products() {
+  const dispatch = useDispatch();
+  const loading = useSelector((state: any) => state.projects.loading);
+  const projects = useSelector((state: any) => state.projects.items);
   React.useEffect(() => {
     dispatch({ type: 'projects/loadAll' });
   }, []);
@@ -26,13 +23,4 @@ const Products = ({ dispatch, projects, loading }: IProps) => {
       <ProductList onDelete={handleDelete} projects={projects} />
     </div>
   );
-};
-
-interface IState {
-  projects: any;
 }
-
-export default connect(({ projects }: IState) => ({
-  projects: projects.items,
-  loading: projects.loading,
-}))(Products);
