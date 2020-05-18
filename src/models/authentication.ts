@@ -11,8 +11,8 @@ export default {
       try {
         const { username, password } = action.payload;
         // TODO: call real api
-        const response = yield call(login, { username, password });
-        console.log(response);
+        // const response = yield call(login, { username, password });
+        // console.log(response);
         // END TODO
         if (username === 'admin' && password === '123456') {
           Cookies.set('token', password);

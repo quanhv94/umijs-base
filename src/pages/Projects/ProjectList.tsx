@@ -1,29 +1,35 @@
 import React from 'react';
-import { Table, Popconfirm, Button } from 'antd';
+import { Table, Popconfirm, Button, message } from 'antd';
 
 interface IProps {
-  onDelete: Function;
   projects: Array<any>;
 }
 
-const ProjectList = ({ onDelete, projects }: IProps) => {
+const ProjectList = ({ projects }: IProps) => {
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
+      title: 'title',
+      dataIndex: 'title',
+    },
+    {
+      title: 'body',
+      dataIndex: 'body',
     },
     {
       title: 'Actions',
       render: (text: any, record: any) => {
         return (
-          <Popconfirm title="Delete?" onConfirm={() => onDelete(record.id)}>
+          <Popconfirm
+            title="Delete?"
+            onConfirm={() => message.warn('TODO: call api delete')}
+          >
             <Button>Delete</Button>
           </Popconfirm>
         );
       },
     },
   ];
-  return <Table rowKey="id" dataSource={projects} columns={columns} />;
+  return <Table rowKey="id" dataSource={projects || []} columns={columns} />;
 };
 
 export default ProjectList;
