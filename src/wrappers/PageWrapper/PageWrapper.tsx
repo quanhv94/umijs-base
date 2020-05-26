@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
 import Cookies from 'js-cookie';
 import { Redirect } from 'umi';
-import PageHeader from '@/components/PageHeader/PageHeader';
-import SideNav from '@/components/SideNav/SideNav';
+import PageHeader from '@/components/PageHeader';
+import SideNav from '@/components/SideNav';
 import styles from './styles.less';
 
 interface IProps {

@@ -36,6 +36,10 @@ export default function({ onSubmit }: IProps) {
           LOGIN
         </Button>
       </Form.Item>
+      <div>
+        <p>Username: admin</p>
+        <p>password: 123456</p>
+      </div>
     </Form>
   );
 }
