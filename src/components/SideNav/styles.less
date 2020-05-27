@@ -1,24 +1,14 @@
 .sideNav {
-  width: 235px;
   background: '#fff';
-}
-.sideMenu {
-  padding-top: 50px;
-}
-
-.menuItem {
-  padding: 15px;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #333 !important;
-  border-left: 3px transparent solid;
-  display: flex;
-  align-items: center;
-  img {
-    margin-right: 10px;
+  border-right: 1px solid #f0f0f0;
+  :global {
+    .ant-menu-inline,
+    .ant-menu-vertical,
+    .ant-menu-vertical-left {
+      border: none;
+    }
+    .anticon {
+      width: 12px;
+    }
   }
-}
-
-.menuItemActive {
-  border-left-color: #ffb900;
-  background-color: rgba(255, 185, 0, 0.2);
 }

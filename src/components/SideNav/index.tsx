@@ -1,41 +1,86 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'umi';
-import classNames from 'classnames';
+import { Menu, Button } from 'antd';
+import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import homeIcon from '@/assets/icons/home.svg';
+import assignmentIcon from '@/assets/icons/assignment.svg';
 import styles from './styles.less';
+
+const { SubMenu } = Menu;
 
 const routes = [
   {
+    key: '1',
     text: 'Home',
     url: '/index',
     icon: homeIcon,
   },
   {
+    key: '2',
     text: 'Projects',
     url: '/projects',
+    icon: assignmentIcon,
+  },
+  {
+    key: '3',
+    text: 'Settings',
     icon: homeIcon,
+    children: [
+      {
+        key: '3.1',
+        text: 'Setting 1',
+        url: '/settings/setting1',
+      },
+      {
+        key: '3.2',
+        text: 'Setting 2',
+        url: '/settings/setting2',
+      },
+    ],
   },
 ];
 
 export default function SideNav() {
   const location = useLocation();
+  const [collapsed, setCollapsed] = useState(false);
+  const toggleCollapsed = () => setCollapsed(!collapsed);
   return (
     <div className={styles.sideNav}>
-      <div className={styles.sideMenu}>
-        {routes.map(item => (
-          <Link
-            key={item.url}
-            className={classNames({
-              [styles.menuItem]: true,
-              [styles.menuItemActive]: location.pathname.includes(item.url),
-            })}
-            to={item.url}
-          >
-            <img src={item.icon} alt="" />
-            <span>{item.text}</span>
-          </Link>
-        ))}
-      </div>
+      <Button onClick={toggleCollapsed}>
+        {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
+      </Button>
+      <Menu
+        defaultSelectedKeys={['1']}
+        defaultOpenKeys={['sub1']}
+        mode="inline"
+        inlineCollapsed={collapsed}
+      >
+        {routes.map(route => {
+          if (route.children) {
+            return (
+              <SubMenu
+                key="sub1"
+                icon={<img className="anticon" src={route.icon} />}
+                title={route.text}
+              >
+                {route.children?.map(childRoute => (
+                  <Menu.Item key={childRoute.key}>
+                    <Link to={childRoute.url}>{childRoute.text}</Link>
+                  </Menu.Item>
+                ))}
+              </SubMenu>
+            );
+          }
+          return (
+            <Menu.Item
+              key={route.key}
+              icon={<img className="anticon" src={route.icon} />}
+            >
+              <Link to={route.url}>{route.text}</Link>
+            </Menu.Item>
+          );
+        })}
+      </Menu>
     </div>
   );
 }
