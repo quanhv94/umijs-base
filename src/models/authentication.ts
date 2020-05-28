@@ -1,6 +1,8 @@
 import Cookies from 'js-cookie';
 import { message } from 'antd';
 import { login } from '../api/authentication';
+import { LogInPayload } from '@/actions/authentication';
+import Navigation from '@/utils/navigation';
 
 export default {
   namespace: 'authentication',
@@ -9,14 +11,15 @@ export default {
   effects: {
     *login(action: any, { call }: any) {
       try {
-        const { username, password } = action.payload;
+        const payload = action.payload as LogInPayload;
+        const { username, password } = payload;
         // TODO: call real api
         // const response = yield call(login, { username, password });
         // console.log(response);
         // END TODO
         if (username === 'admin' && password === '123456') {
           Cookies.set('token', password);
-          action.history.push('/');
+          Navigation.history?.push('/');
         } else {
           message.error('Username or password is invalid!');
         }
@@ -25,9 +28,9 @@ export default {
         console.log(e);
       }
     },
-    logout(action: any) {
+    logout() {
       Cookies.remove('token');
-      action.history.push('/login');
+      Navigation.history?.push('/login');
     },
   },
 };

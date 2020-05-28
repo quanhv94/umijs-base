@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'umi';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation, useHistory } from 'umi';
 import { Menu, Button } from 'antd';
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import homeIcon from '@/assets/icons/home.svg';
@@ -44,14 +44,31 @@ export default function SideNav() {
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
   const toggleCollapsed = () => setCollapsed(!collapsed);
+  const [selectedKey, setSelectedKey] = useState('1');
+
+  useEffect(() => {
+    routes.forEach(route => {
+      if (location.pathname.startsWith(route.url || '###')) {
+        setSelectedKey(route.key);
+      }
+      if (route.children) {
+        route.children.forEach(route => {
+          if (location.pathname.startsWith(route.url || '###')) {
+            setSelectedKey(route.key);
+          }
+        });
+      }
+    });
+  }, [location.pathname]);
+
   return (
     <div className={styles.sideNav}>
       <Button onClick={toggleCollapsed}>
         {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
       </Button>
       <Menu
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={['sub1']}
+        selectedKeys={[selectedKey]}
+        defaultOpenKeys={['3']}
         mode="inline"
         inlineCollapsed={collapsed}
       >
@@ -59,7 +76,7 @@ export default function SideNav() {
           if (route.children) {
             return (
               <SubMenu
-                key="sub1"
+                key={route.key}
                 icon={<img className="anticon" src={route.icon} />}
                 title={route.text}
               >
