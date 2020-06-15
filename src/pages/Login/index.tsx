@@ -4,13 +4,10 @@ import Cookies from 'js-cookie';
 import { Card } from 'antd';
 import LoginForm from './Form';
 import styles from './style.less';
-import Navigation from '@/utils/navigation';
 import { login } from '@/actions/authentication';
 
 export default function Login() {
   const history = useHistory();
-  Navigation.setTopLevelHistory(history);
-
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -5,19 +5,30 @@ export default defineConfig({
     type: 'none',
   },
   hash: true,
+  favicon: '/favicon.ico',
   routes: [
-    { path: '/login', exact: true, component: '@/pages/Login' },
-    { path: '/', exact: true, redirect: '/index' },
     {
       path: '/',
       exact: false,
-      component: '@/wrappers/PageWrapper/PageWrapper',
+      component: '@/wrappers/AppWrapper',
       routes: [
-        { path: '/index', exact: true, component: '@/pages/Index' },
+        { path: '/login', exact: true, component: '@/pages/Login' },
         {
-          path: '/projects',
-          exact: true,
-          component: '@/pages/Projects',
+          path: '/',
+          exact: false,
+          component: '@/wrappers/PageWrapper',
+          routes: [
+            {
+              path: '/index',
+              exact: true,
+              component: '@/pages/Index',
+            },
+            {
+              path: '/projects',
+              exact: true,
+              component: '@/pages/Projects',
+            },
+          ],
         },
       ],
     },
