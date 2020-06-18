@@ -1,15 +1,30 @@
 import React, { useState } from 'react';
-import { Spin } from 'antd';
+import { Spin, Pagination } from 'antd';
 import ProductList from './ProjectList';
 import useFetch from '@/hooks/useFetch';
 
+const pageSize = 5;
+
 export default function Products() {
-  const projects = useFetch('/posts', {});
-  if (projects.loading) return <Spin />;
+  const [filter, setFilter] = useState({ pageIndex: 1, pageSize });
+
+  const { data, loading } = useFetch('/projects', filter);
+
+  const handlePageChange = (page: number) => {
+    setFilter({ ...filter, pageIndex: page });
+  };
+
   return (
     <div>
       <h2>List of Project</h2>
-      <ProductList projects={projects.data || []} />
+      <ProductList loading={loading} projects={data?.data} />
+      <Pagination
+        current={filter.pageIndex}
+        total={data?.totalItems}
+        pageSize={filter.pageSize}
+        onChange={handlePageChange}
+        showSizeChanger={false}
+      />
     </div>
   );
 }

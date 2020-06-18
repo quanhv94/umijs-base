@@ -3,9 +3,10 @@ import { Table, Popconfirm, Button, message } from 'antd';
 
 interface IProps {
   projects: Array<any>;
+  loading: boolean;
 }
 
-const ProjectList = ({ projects }: IProps) => {
+const ProjectList = ({ projects, loading }: IProps) => {
   const columns = [
     {
       title: 'title',
@@ -29,7 +30,15 @@ const ProjectList = ({ projects }: IProps) => {
       },
     },
   ];
-  return <Table rowKey="id" dataSource={projects || []} columns={columns} />;
+  return (
+    <Table
+      rowKey="id"
+      dataSource={projects || []}
+      columns={columns}
+      pagination={false}
+      loading={loading}
+    />
+  );
 };
 
 export default ProjectList;

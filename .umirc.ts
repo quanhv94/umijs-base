@@ -6,6 +6,7 @@ export default defineConfig({
   },
   hash: true,
   favicon: '/favicon.ico',
+  title: false,
   routes: [
     {
       path: '/',
