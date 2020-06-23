@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 import { message } from 'antd';
 import { login } from '../api/authentication';
 import { LogInPayload } from '@/actions/authentication';
-import Navigation from '@/utils/navigation';
+import { history } from 'umi';
 
 export default {
   namespace: 'authentication',
@@ -19,7 +19,7 @@ export default {
         // END TODO
         if (username === 'admin' && password === '123456') {
           Cookies.set('token', password);
-          Navigation.history?.push('/');
+          history.push('/');
         } else {
           message.error('Username or password is invalid!');
         }
@@ -30,7 +30,7 @@ export default {
     },
     logout() {
       Cookies.remove('token');
-      Navigation.history?.push('/login');
+      history.push('/login');
     },
   },
 };
