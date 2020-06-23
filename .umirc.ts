@@ -1,4 +1,4 @@
-import { defineConfig } from 'umi';
+import { defineConfig, dynamic } from 'umi';
 
 export default defineConfig({
   nodeModulesTransform: {
@@ -7,6 +7,7 @@ export default defineConfig({
   hash: true,
   favicon: '/favicon.ico',
   title: false,
+  dynamicImport: {}, // code splitting
   routes: [
     {
       path: '/',
