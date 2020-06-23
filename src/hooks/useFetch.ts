@@ -3,9 +3,12 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import { sendGet } from '@/api/axios';
 
 export default function useFetch(url: string, params?: any) {
+  const [timestamp, setTimestamp] = React.useState(new Date().getTime());
   const [data, setData] = React.useState<any>(null);
   const [loading, setLoading] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
+
+  const reload = () => setTimestamp(new Date().getTime());
 
   useDeepCompareEffect(() => {
     let cancelled = false;
@@ -25,11 +28,12 @@ export default function useFetch(url: string, params?: any) {
     return () => {
       cancelled = true;
     };
-  }, [url, params]);
+  }, [url, params, timestamp]);
 
   return {
     data,
     loading,
     errorMessage,
+    reload,
   };
 }
