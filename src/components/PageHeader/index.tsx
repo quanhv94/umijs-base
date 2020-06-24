@@ -37,7 +37,7 @@ export default function PageHeader() {
           <span className={styles.badge}>4</span>
         </div>
         <div className={styles.menuItem}>
-          <Dropdown overlay={menu} trigger={['click', 'hover']}>
+          <Dropdown overlay={menu} trigger={['click']}>
             <img className={styles.icon} src={avatarImg} alt="" />
           </Dropdown>
         </div>

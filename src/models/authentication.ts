@@ -12,13 +12,15 @@ export default {
     *login(action: any, { call }: any) {
       try {
         const payload = action.payload as LogInPayload;
-        const { username, password } = payload;
+        const { username, password, remember } = payload;
         // TODO: call real api
         // const response = yield call(login, { username, password });
         // console.log(response);
         // END TODO
         if (username === 'admin' && password === '123456') {
-          Cookies.set('token', password);
+          Cookies.set('token', password, {
+            expires: remember ? 999999 : undefined,
+          });
           history.push('/');
         } else {
           message.error('Username or password is invalid!');

@@ -1,6 +1,7 @@
 export interface LogInPayload {
   username: string;
   password: string;
+  remember: boolean;
 }
 
 export const login = (payload: LogInPayload) => ({

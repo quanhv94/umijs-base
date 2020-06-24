@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Button, Form, Row } from 'antd';
+import { Input, Button, Form, Row, Checkbox } from 'antd';
 
 interface IProps {
   onSubmit: (values: any) => void;
@@ -30,6 +30,9 @@ export default function({ onSubmit }: IProps) {
         wrapperCol={{ span: 16 }}
       >
         <Input.Password />
+      </Form.Item>
+      <Form.Item name="remember" valuePropName="checked">
+        <Checkbox>Remember me</Checkbox>
       </Form.Item>
       <Form.Item labelCol={{ span: 24 }}>
         <Button block type="primary" htmlType="submit">

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { sendGet } from '@/api/axios';
 
@@ -33,9 +33,8 @@ export default function usePagination(url: string, params?: any) {
 
   const getItem = (id: number) => data.find(x => x.id === id);
 
-  const forceReload = () => {
+  const reload = () => {
     if (pageIndex === 1) {
-      setPageIndex(1);
       setTimestamp(new Date().getTime());
     } else {
       setPageIndex(1);
@@ -86,7 +85,7 @@ export default function usePagination(url: string, params?: any) {
     getItem,
     removeItem,
     updateItem,
-    forceReload,
+    reload,
     loadMore,
   };
 }

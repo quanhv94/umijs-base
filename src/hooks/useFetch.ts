@@ -3,7 +3,7 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import { sendGet } from '@/api/axios';
 
 export default function useFetch(url: string, params?: any) {
-  const [timestamp, setTimestamp] = React.useState(new Date().getTime());
+  const [timestamp, setTimestamp] = React.useState(0);
   const [data, setData] = React.useState<any>(null);
   const [loading, setLoading] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
