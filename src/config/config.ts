@@ -17,6 +17,6 @@ const configProd = {
 
 const env = process.env.APP_ENV;
 const configs =
-  env === 'prod' ? configProd : env === 'staging' ? configStaging : configDev;
+  env === 'prd' ? configProd : env === 'stg' ? configStaging : configDev;
 
 export default configs;
