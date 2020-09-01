@@ -1,21 +1,21 @@
-if (!process.env.APP_ENV) {
+const env = (window as any).APP_ENV;
+if (!env) {
   // eslint-disable-next-line no-alert
   window.alert(
-    'Please config .env! (copy .env.example to .env in root project folder!)',
+    'Please config .env.js.example to .env.js in public folder and config env variable!',
   );
 }
 
 const configDev = {
-  API_DOMAIN: 'https://us-central1-quanhv94-69c78.cloudfunctions.net',
+  API_DOMAIN: 'http://training-api.test.amela.vn',
 };
 const configStaging = {
-  API_DOMAIN: 'https://us-central1-quanhv94-69c78.cloudfunctions.net',
+  API_DOMAIN: 'http://training-api.test.amela.vn',
 };
 const configProd = {
-  API_DOMAIN: 'https://us-central1-quanhv94-69c78.cloudfunctions.net',
+  API_DOMAIN: 'http://training-api.test.amela.vn',
 };
 
-const env = process.env.APP_ENV;
 const configs =
   env === 'prod' ? configProd : env === 'staging' ? configStaging : configDev;
 

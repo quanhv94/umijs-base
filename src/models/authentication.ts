@@ -1,37 +1,33 @@
 import Cookies from 'js-cookie';
 import { message } from 'antd';
-import { login } from '../api/authentication';
+import * as authenticationApi from '../api/authentication';
 import { LogInPayload } from '@/actions/authentication';
 import { history } from 'umi';
+import { handleServerMessage } from '@/utils/response';
 
 export default {
   namespace: 'authentication',
   state: {},
   reducers: {},
   effects: {
-    *login(action: any, { call }: any) {
+    *login(action: any, { call, put }: any) {
       try {
         const payload = action.payload as LogInPayload;
-        const { username, password, remember } = payload;
-        // TODO: call real api
-        // const response = yield call(login, { username, password });
-        // console.log(response);
-        // END TODO
-        if (username === 'admin' && password === '123456') {
-          Cookies.set('token', password, {
-            expires: remember ? 999999 : undefined,
-          });
-          history.push('/');
-        } else {
-          message.error('Username or password is invalid!');
-        }
-      } catch (e) {
-        message.error('Cannot connect to server!');
-        console.log(e);
+        const { data } = yield call(authenticationApi.login, payload);
+        history.push('/');
+        Cookies.set('token', data.data.token, {
+          expires: payload.remember ? 999999 : undefined,
+        });
+        Cookies.set('refreshToken', data.data.refreshToken, {
+          expires: payload.remember ? 999999 : undefined,
+        });
+      } catch (error) {
+        handleServerMessage(error);
       }
     },
     logout() {
       Cookies.remove('token');
+      Cookies.remove('refreshToken');
       history.push('/login');
     },
   },

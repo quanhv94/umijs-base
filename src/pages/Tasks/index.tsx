@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Spin, Pagination, Button } from 'antd';
-import ProductList from './ProjectList';
+import { Spin, Pagination, Button, Row } from 'antd';
+import ProductList from './TaskList';
 import useFetch from '@/hooks/useFetch';
 
 const pageSize = 5;
@@ -8,7 +8,7 @@ const pageSize = 5;
 export default function Products() {
   const [filter, setFilter] = useState({ pageIndex: 1, pageSize });
 
-  const { data, loading, reload } = useFetch('/projects', filter);
+  const { data, loading, reload } = useFetch('/v1/app/task/list', filter);
 
   const handlePageChange = (page: number) => {
     setFilter({ ...filter, pageIndex: page });
@@ -16,9 +16,12 @@ export default function Products() {
 
   return (
     <div>
-      <h2>List of Project</h2>
-      <Button onClick={reload}>Reload</Button>
+      <Row justify="space-between">
+        <h2>List of Task</h2>
+        <Button onClick={reload}>Reload</Button>
+      </Row>
       <ProductList loading={loading} projects={data?.data} />
+      <p />
       <Pagination
         current={filter.pageIndex}
         total={data?.totalItems}

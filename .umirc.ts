@@ -15,20 +15,21 @@ export default defineConfig({
       component: '@/wrappers/AppWrapper',
       routes: [
         { path: '/login', exact: true, component: '@/pages/Login' },
+        { path: '/sign-up', exact: true, component: '@/pages/SignUp' },
         {
           path: '/',
           exact: false,
           component: '@/wrappers/PageWrapper',
           routes: [
             {
-              path: '/index',
+              path: '/',
               exact: true,
               component: '@/pages/Index',
             },
             {
-              path: '/projects',
+              path: '/tasks',
               exact: true,
-              component: '@/pages/Projects',
+              component: '@/pages/Tasks',
             },
           ],
         },

@@ -38,14 +38,16 @@ axiosInstance.interceptors.response.use(
       history.push('/');
       return;
     }
-    return Axios.post(`${configs.API_DOMAIN}/v1/web/auth/refresh`, {
-      refreshToken,
-    })
+    return Axios.post(
+      `${configs.API_DOMAIN}/v1/app/auth/request-access-token`,
+      {
+        refreshToken,
+      },
+    )
       .then(res => {
         if (res.status === 200) {
           const data = res.data;
           Cookies.set('token', data.token);
-          Cookies.set('refreshToken', data.refreshToken);
           originalConfig.headers.Authorization = `Bearer ${data.token}`;
           return Axios(originalConfig);
         } else {

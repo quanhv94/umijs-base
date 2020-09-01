@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import avatarImg from '@/assets/images/avatar.svg';
-import { Link, useHistory } from 'umi';
-import Cookies from 'js-cookie';
-import { HelpIcon, NotificationIcon } from '../Icons';
+import { Link, useSelector, useDispatch } from 'umi';
 import styles from './styles.less';
 import { Menu, Dropdown } from 'antd';
+import { logout } from '@/actions/authentication';
 
 export default function PageHeader() {
-  const history = useHistory();
+  const dispatch = useDispatch();
   const handleLogout = () => {
-    history.push('/login');
-    Cookies.remove('token');
+    dispatch(logout());
   };
+
+  const profile = useSelector((state: any) => state.profile);
 
   const menu = (
     <Menu style={{ minWidth: 200 }}>
       <Menu.Item key="1">Profile</Menu.Item>
-      <Menu.Item key="2">Setting</Menu.Item>
+      <Menu.Item key="2">Change Password</Menu.Item>
       <Menu.Item key="3" onClick={handleLogout}>
         Logout
       </Menu.Item>
@@ -30,15 +30,12 @@ export default function PageHeader() {
       </Link>
       <div className={styles.menuWrapper}>
         <div className={styles.menuItem}>
-          <HelpIcon />
-        </div>
-        <div className={styles.menuItem}>
-          <NotificationIcon />
-          <span className={styles.badge}>4</span>
-        </div>
-        <div className={styles.menuItem}>
           <Dropdown overlay={menu} trigger={['click']}>
-            <img className={styles.icon} src={avatarImg} alt="" />
+            <div>
+              <span>Hi {profile?.fullName || profile?.username}!</span>
+              &nbsp;
+              <img className={styles.icon} src={avatarImg} alt="" />
+            </div>
           </Dropdown>
         </div>
       </div>

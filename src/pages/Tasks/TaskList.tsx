@@ -6,26 +6,29 @@ interface IProps {
   loading: boolean;
 }
 
-const ProjectList = ({ projects, loading }: IProps) => {
+const TaskList = ({ projects, loading }: IProps) => {
   const columns = [
     {
-      title: 'title',
+      title: 'Title',
       dataIndex: 'title',
     },
     {
-      title: 'body',
-      dataIndex: 'body',
+      title: 'Content',
+      dataIndex: 'content',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
     },
     {
       title: 'Actions',
       render: (text: any, record: any) => {
         return (
-          <Popconfirm
-            title="Delete?"
-            onConfirm={() => message.warn('TODO: call api delete')}
-          >
-            <Button>Delete</Button>
-          </Popconfirm>
+          <>
+            <Button>Detail</Button>
+            &nbsp;
+            <Button>Edit</Button>
+          </>
         );
       },
     },
@@ -41,4 +44,4 @@ const ProjectList = ({ projects, loading }: IProps) => {
   );
 };
 
-export default ProjectList;
+export default TaskList;

@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useHistory } from 'umi';
-import { Menu, Button } from 'antd';
-import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
-import homeIcon from '@/assets/icons/home.svg';
-import assignmentIcon from '@/assets/icons/assignment.svg';
+import { Menu, Button, Row } from 'antd';
+import {
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+  HomeOutlined,
+  TableOutlined,
+  SettingOutlined,
+} from '@ant-design/icons';
 import styles from './styles.less';
 
 const { SubMenu } = Menu;
@@ -12,19 +16,19 @@ const routes = [
   {
     key: '1',
     text: 'Home',
-    url: '/index',
-    icon: homeIcon,
+    url: '/',
+    icon: <HomeOutlined />,
   },
   {
     key: '2',
-    text: 'Projects',
-    url: '/projects',
-    icon: assignmentIcon,
+    text: 'Tasks',
+    url: '/tasks',
+    icon: <TableOutlined />,
   },
   {
     key: '3',
     text: 'Settings',
-    icon: homeIcon,
+    icon: <SettingOutlined />,
     children: [
       {
         key: '3.1',
@@ -63,23 +67,22 @@ export default function SideNav() {
 
   return (
     <div className={styles.sideNav}>
-      <Button onClick={toggleCollapsed}>
-        {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
-      </Button>
+      <Row justify="end">
+        <Button onClick={toggleCollapsed}>
+          {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+        </Button>
+      </Row>
       <Menu
         selectedKeys={[selectedKey]}
         defaultOpenKeys={['3']}
         mode="inline"
         inlineCollapsed={collapsed}
+        style={{ width: collapsed ? 80 : 250, transition: 'width 0.3s' }}
       >
         {routes.map(route => {
           if (route.children) {
             return (
-              <SubMenu
-                key={route.key}
-                icon={<img className="anticon" src={route.icon} />}
-                title={route.text}
-              >
+              <SubMenu key={route.key} icon={route.icon} title={route.text}>
                 {route.children?.map(childRoute => (
                   <Menu.Item key={childRoute.key}>
                     <Link to={childRoute.url}>{childRoute.text}</Link>
@@ -89,10 +92,7 @@ export default function SideNav() {
             );
           }
           return (
-            <Menu.Item
-              key={route.key}
-              icon={<img className="anticon" src={route.icon} />}
-            >
+            <Menu.Item key={route.key} icon={route.icon}>
               <Link to={route.url}>{route.text}</Link>
             </Menu.Item>
           );
