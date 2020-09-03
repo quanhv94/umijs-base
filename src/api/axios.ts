@@ -7,6 +7,7 @@ const axiosInstance = Axios.create({
   timeout: 3 * 60 * 1000,
   baseURL: configs.API_DOMAIN,
 });
+
 axiosInstance.interceptors.request.use(
   config => {
     // eslint-disable-next-line no-param-reassign
@@ -16,15 +17,6 @@ axiosInstance.interceptors.request.use(
   error => Promise.reject(error),
 );
 
-axiosInstance.interceptors.request.use(
-  config => {
-    // eslint-disable-next-line no-param-reassign
-    config.headers.Authorization = `Bearer ${Cookies.get('token')}`;
-    config.headers.timezoneoffset = new Date().getTimezoneOffset();
-    return config;
-  },
-  error => Promise.reject(error),
-);
 axiosInstance.interceptors.response.use(
   response => response,
   error => {
