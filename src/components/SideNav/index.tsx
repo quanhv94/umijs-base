@@ -68,7 +68,7 @@ export default function SideNav() {
   return (
     <div className={styles.sideNav}>
       <Row justify="end">
-        <Button onClick={toggleCollapsed}>
+        <Button onClick={toggleCollapsed} className={styles.collapseButton}>
           {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
         </Button>
       </Row>
