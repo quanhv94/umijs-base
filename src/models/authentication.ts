@@ -3,7 +3,7 @@ import { message } from 'antd';
 import * as authenticationApi from '../api/authentication';
 import { LogInPayload } from '@/actions/authentication';
 import { history } from 'umi';
-import { handleServerMessage } from '@/utils/response';
+import { handleErrorMessage } from '@/utils';
 
 export default {
   namespace: 'authentication',
@@ -22,7 +22,7 @@ export default {
           expires: payload.remember ? 999999 : undefined,
         });
       } catch (error) {
-        handleServerMessage(error);
+        handleErrorMessage(error);
       }
     },
     logout() {

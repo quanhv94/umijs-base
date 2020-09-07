@@ -1,6 +1,6 @@
 import * as profileApi from '../api/profile';
 import { loadProfileSuccess } from '@/actions/profile';
-import { handleServerMessage } from '@/utils/response';
+import { handleErrorMessage } from '@/utils';
 
 export default {
   namespace: 'profile',
@@ -14,7 +14,7 @@ export default {
         const { data } = yield call(profileApi.loadProfile);
         yield put(loadProfileSuccess(data.data));
       } catch (error) {
-        handleServerMessage(error);
+        handleErrorMessage(error);
       }
     },
     *updateProfile() {},

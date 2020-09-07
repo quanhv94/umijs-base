@@ -1,5 +1,5 @@
 import { message } from 'antd';
 
-export const handleServerMessage = (error: any) => {
+export const handleErrorMessage = (error: any) => {
   message.error(error?.response?.data?.errorMessage || 'Something wrong!');
 };
