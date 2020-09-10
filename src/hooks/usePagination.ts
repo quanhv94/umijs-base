@@ -55,7 +55,7 @@ export default function usePagination(url: string, params?: any) {
       .then((response: any) => {
         setResult({ ...result, loading: false });
         const responseData = response.data;
-        const newResult = {
+        setResult({
           ...result,
           hasMore:
             Number(responseData.pageIndex) < Number(responseData.totalPages),
@@ -66,8 +66,7 @@ export default function usePagination(url: string, params?: any) {
             responseData.pageIndex === 1
               ? responseData.data
               : [...result.data, ...responseData.data],
-        };
-        setResult(newResult);
+        });
       })
       .catch(error => {
         setResult({
