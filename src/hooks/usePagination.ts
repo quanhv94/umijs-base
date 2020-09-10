@@ -1,25 +1,28 @@
 import React from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import { sendGet } from '@/api/axios';
+import { getErrorMessage } from '@/utils';
 
 export default function usePagination(url: string, params?: any) {
-  const [timestamp, setTimestamp] = React.useState(0);
-  const [pageIndex, setPageIndex] = React.useState(1);
-  const [data, setData] = React.useState<Array<any>>([]);
-  const [pageSize, setPageSize] = React.useState(null);
-  const [totalItems, setTotalItems] = React.useState(null);
-  const [totalPage, setTotalPage] = React.useState(null);
-  const [loading, setLoading] = React.useState(false);
-  const [hasMore, setHasMore] = React.useState(true);
-  const [errorMessage, setErrorMessage] = React.useState('');
+  const [result, setResult] = React.useState({
+    timestamp: 0,
+    data: [],
+    pageIndex: 1,
+    pageSize: 0,
+    totalItems: 0,
+    totalPages: 0,
+    loading: false,
+    hasMore: true,
+    errorMessage: '',
+  });
 
   const removeItem = (id: number) => {
-    const newData = data.filter(x => x.id !== id);
-    setData(newData);
+    const newData = result?.data?.filter((x: any) => x?.id !== id);
+    setResult({ ...result, data: newData });
   };
 
   const updateItem = (id: number, fields: any) => {
-    const newData = data.map(x => {
+    const newData: any = result?.data?.map((x: any) => {
       if (x.id === id) {
         return {
           ...x,
@@ -28,60 +31,55 @@ export default function usePagination(url: string, params?: any) {
       }
       return x;
     });
-    setData(newData);
+    setResult({ ...result, data: newData });
   };
 
-  const getItem = (id: number) => data.find(x => x.id === id);
+  const getItem = (id: number) => result?.data?.find((x: any) => x.id === id);
 
   const reload = () => {
-    if (pageIndex === 1) {
-      setTimestamp(new Date().getTime());
+    if (result.pageIndex === 1) {
+      setResult({ ...result, timestamp: new Date().getTime() });
     } else {
-      setPageIndex(1);
+      setResult({ ...result, pageIndex: 1 });
     }
   };
 
   const loadMore = () => {
-    setPageIndex(pageIndex + 1);
-  };
-
-  const fetchData = () => {
-    if (loading) return;
-    setLoading(true);
-    sendGet(url, { ...params, page_index: pageIndex })
-      .then((response: any) => {
-        setLoading(false);
-        const reponseData = response.data;
-        if (pageIndex === 1) {
-          setData(reponseData.data);
-        } else {
-          setData([...data, ...reponseData.data]);
-        }
-        setHasMore(
-          Number(reponseData.page_index) < Number(reponseData.total_pages),
-        );
-        setPageSize(reponseData.page_size);
-        setTotalItems(reponseData.total_item);
-        setTotalPage(reponseData.total_pages);
-      })
-      .catch(error => {
-        setLoading(false);
-        setErrorMessage(String(error));
-      });
+    setResult({ ...result, pageIndex: result.pageIndex + 1 });
   };
 
   useDeepCompareEffect(() => {
-    fetchData();
-  }, [url, pageIndex, timestamp, params]);
+    if (result.loading) return;
+    setResult({ ...result, loading: true });
+    sendGet(url, { ...params, pageIndex: result.pageIndex })
+      .then((response: any) => {
+        setResult({ ...result, loading: false });
+        const responseData = response.data;
+        const newResult = {
+          ...result,
+          hasMore:
+            Number(responseData.pageIndex) < Number(responseData.totalPages),
+          pageSize: responseData.pageSize,
+          totalItems: responseData.totalItems,
+          totalPages: responseData.totalPages,
+          data:
+            responseData.pageIndex === 1
+              ? responseData.data
+              : [...result.data, ...responseData.data],
+        };
+        setResult(newResult);
+      })
+      .catch(error => {
+        setResult({
+          ...result,
+          loading: false,
+          errorMessage: getErrorMessage(error),
+        });
+      });
+  }, [url, result.pageIndex, result.timestamp, params]);
 
   return {
-    data,
-    loading,
-    hasMore,
-    errorMessage,
-    pageSize,
-    totalItems,
-    totalPage,
+    ...result,
     getItem,
     removeItem,
     updateItem,

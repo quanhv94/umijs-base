@@ -13,13 +13,17 @@ export default {
     *login(action: any, { call, put }: any) {
       try {
         const payload = action.payload as LogInPayload;
-        const { data } = yield call(authenticationApi.login, payload);
+        const { username, password, remember } = payload;
+        const { data } = yield call(authenticationApi.login, {
+          username,
+          password,
+        });
         history.push('/');
         Cookies.set('token', data.data.token, {
-          expires: payload.remember ? 999999 : undefined,
+          expires: remember ? 999999 : undefined,
         });
         Cookies.set('refreshToken', data.data.refreshToken, {
-          expires: payload.remember ? 999999 : undefined,
+          expires: remember ? 999999 : undefined,
         });
       } catch (error) {
         handleErrorMessage(error);

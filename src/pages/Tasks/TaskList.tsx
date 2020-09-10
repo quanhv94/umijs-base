@@ -2,7 +2,7 @@ import React from 'react';
 import { Table, Popconfirm, Button, message } from 'antd';
 
 interface IProps {
-  projects: Array<any>;
+  projects: any;
   loading: boolean;
 }
 

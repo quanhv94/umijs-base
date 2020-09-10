@@ -8,7 +8,10 @@ const pageSize = 5;
 export default function Products() {
   const [filter, setFilter] = useState({ pageIndex: 1, pageSize });
 
-  const { data, loading, reload } = useFetch('/v1/app/task/list', filter);
+  const { data, totalItems, pageIndex, loading, reload } = useFetch(
+    '/v1/app/task/list',
+    filter,
+  );
 
   const handlePageChange = (page: number) => {
     setFilter({ ...filter, pageIndex: page });
@@ -20,12 +23,12 @@ export default function Products() {
         <h2>List of Task</h2>
         <Button onClick={reload}>Reload</Button>
       </Row>
-      <ProductList loading={loading} projects={data?.data} />
+      <ProductList loading={loading} projects={data} />
       <p />
       <Pagination
-        current={filter.pageIndex}
-        total={data?.totalItems}
-        pageSize={filter.pageSize}
+        current={pageIndex}
+        total={totalItems}
+        pageSize={pageSize}
         onChange={handlePageChange}
         showSizeChanger={false}
       />
