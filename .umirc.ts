@@ -7,7 +7,9 @@ export default defineConfig({
   hash: true,
   favicon: '/favicon.ico',
   title: false,
-  dynamicImport: {}, // code splitting
+  dynamicImport: {
+    loading: '@/components/DynamicLoading',
+  }, // code splitting
   routes: [
     {
       path: '/',

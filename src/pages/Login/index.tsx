@@ -5,10 +5,12 @@ import {} from 'antd';
 import styles from './style.less';
 import { login } from '@/actions/authentication';
 import { Card, Input, Button, Form, Row, Checkbox } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 export default function Login() {
   const history = useHistory();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (Cookies.get('token')) {
@@ -27,12 +29,17 @@ export default function Login() {
       <Card bordered className={styles.loginForm}>
         <Form onFinish={handleSubmit}>
           <Row justify="center">
-            <h2>LOGIN</h2>
+            <h2>{t('common.login')}</h2>
           </Row>
           <Form.Item
-            label="Username"
+            label={t('common.username')}
             name="username"
-            rules={[{ required: true, message: 'Username is required!' }]}
+            rules={[
+              {
+                required: true,
+                message: t('validate.usernameRequired'),
+              },
+            ]}
             labelAlign="left"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
@@ -40,9 +47,11 @@ export default function Login() {
             <Input />
           </Form.Item>
           <Form.Item
-            label="Password"
+            label={t('common.password')}
             name="password"
-            rules={[{ required: true, message: 'Password is required!' }]}
+            rules={[
+              { required: true, message: t('validate.passwordRequired') },
+            ]}
             labelAlign="left"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
@@ -50,11 +59,11 @@ export default function Login() {
             <Input.Password />
           </Form.Item>
           <Form.Item name="remember" valuePropName="checked">
-            <Checkbox>Remember me</Checkbox>
+            <Checkbox> {t('common.rememberMe')}</Checkbox>
           </Form.Item>
           <Form.Item labelCol={{ span: 24 }}>
             <Button block type="primary" htmlType="submit">
-              LOGIN
+              {t('common.login').toUpperCase()}
             </Button>
           </Form.Item>
           <Form.Item labelCol={{ span: 24 }}>
@@ -64,7 +73,7 @@ export default function Login() {
               htmlType="button"
               onClick={navigateToSignUp}
             >
-              Sign Up
+              {t('common.signUp').toUpperCase()}
             </Button>
           </Form.Item>
           <div>
